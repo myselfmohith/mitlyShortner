@@ -1,1 +1,135 @@
-<h1>CODE = <%=code%></h1>
+<div class="pagecontainer">
+    <a id="pagelink" target="_blank">
+        <div class="card">
+            <img id="pageimage">
+            <span id="pagetittle"></span>
+            <span id="pagedescrip"></span>
+            <span id="pageurl"></span>
+        </div>
+    </a>
+    <br><br>
+    <span>You will be redirected to <%=pagelink%> in<br><h3></h3></span>
+</div>
+
+<style>
+    .pagecontainer {
+        width: 100vw;
+        height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #pagelink {
+        text-decoration: none;
+        color: inherit;
+        text-align: left;
+    }
+
+    #pagelink * {
+        color: black;
+    }
+
+    #pagelink .card {
+        display: flex;
+        background-color: white;
+        flex-direction: column;
+        width: 300px;
+        padding: 20px;
+        border-radius: 15px;
+        transition: 0.5s;
+        overflow: hidden;
+    }
+
+    #pagelink .card span{
+        margin: 10px 0 0;
+    }
+
+    #pagelink .card:hover {
+        transform: translate(0, -10px);
+        box-shadow: 1px 1px 10px 1px #00000050;
+    }
+
+
+    #pageimage {
+        width: 100%;
+        max-height: 400px;
+        margin: auto auto 10px;
+        border-radius: 5px;
+    }
+
+    #pagetittle {
+        margin-top: 20px;
+        border-top: solid 1px grey;
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    #pagedescrip {
+        font-size: 16px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    #pageurl {
+        font-size: 10px;
+        color: grey;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .pagecontainer span h3{
+        font-family: sans-serif;
+        display: inline-block;
+        margin-top: 10px;
+        min-width: 50px;
+        min-height: 50px;
+        font-size: 50px;
+        padding: 10px;
+        border: solid #fff 0.5px;
+        border-radius: 50%;
+    }
+
+</style>
+
+
+<script>
+
+    let count = 9;
+    function countdown(){
+        document.querySelector(".pagecontainer span h3").innerHTML = count;
+        if(count == 0){
+            window.location.href = "<%=pagelink%>";
+            return;
+        }
+        count--;
+    }
+
+    setInterval(countdown,1000);
+
+    async function getLinkInfo(mainurl) {
+        const pageinfo = await fetch(mainurl);
+        const info = await pageinfo.json();
+        return info;
+    }
+
+
+    function setData(page) {
+        console.log(page);
+        document.getElementById("pagetittle").innerHTML = page.title;
+        if(page.description === "Too many requests / rate limit exceeded")  page.description = "Redirecting....."
+        document.getElementById("pagedescrip").innerHTML = page.description;
+        document.getElementById("pageurl").innerHTML = page.url;
+        document.getElementById("pagelink").setAttribute('href', "<%=pagelink%>");
+        document.getElementById("pageimage").setAttribute('src', page.image);
+        document.getElementById("pageimage").setAttribute('alt', page.title);
+    }
+
+    const link = "http://api.linkpreview.net/?key=df4637e6c4be80b9f5047c9129cfc320&q=<%=pagelink%>"
+    getLinkInfo(link).then(da => setData(da));
+
+</script>

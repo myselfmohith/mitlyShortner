@@ -120,7 +120,7 @@ route.get('/another', (req, res) => {
 // Redirect to page via ShortLink >>>>>>>
 route.get("/:shortlink", async (req, res) => {
     const finalLink = await getLongLink(req.params.shortlink);
-    res.redirect(finalLink);
+    res.render('redirecttoPage',{pagelink : finalLink});
 })
 
 
