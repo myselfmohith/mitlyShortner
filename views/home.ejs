@@ -71,8 +71,7 @@
 
   const bt = document.querySelector("#textCopy");
   try {
-    document.getElementById("shortLinkgiven").value =
-      window.location.href + "<%- link %>";
+    document.getElementById("shortLinkgiven").value = window.location.hostname + "/<%- link %>";
     bt.addEventListener("click", (event) => {
       var copyText = document.getElementById("shortLinkgiven");
       copyText.select();
