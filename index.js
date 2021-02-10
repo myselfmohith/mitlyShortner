@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const cookieParser = require('cookie-parser');
 const passport = require("passport");
 const passportLocal = require("passport-local").Strategy;
 mongoose.connect(process.env.DB_URL || "mongodb://localhost/urlShortner", {
@@ -37,12 +38,13 @@ passport.use(
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(require("express-ejs-layouts"));
 app.use(
   session({
-    secret: process.env.MYSECRET,
+    secret: process.env.MYSECRET || "HEY MAN",
     resave: false,
     saveUninitialized: false,
   })

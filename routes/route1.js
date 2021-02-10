@@ -7,16 +7,6 @@ const UserDB = require("../models/usersDB");
 const route = express.Router();
 
 
-// variables =============
-
-var shortenedLink = null;
-
-// -----------------------
-
-
-// Functions ========================================
-
-
 function getID() {
     return (Math.random() * 1000000).toString(36).substr(0 || Math.random() * 10, 6 || Math.random() * 10).replace(".", "-");
 }
@@ -25,19 +15,21 @@ function getID() {
 const addLink = async (req) => {
     const inputedLink = req.body.link;
     const foundLink = await LinksDB.findOne({ longURL: inputedLink });
-    if (foundLink != null) shortenedLink = foundLink.shortURL;
+    var rlink = "";
+    if (foundLink != null) rlink = foundLink.shortURL;
     else {
-        shortenedLink = getID();
+        rlink = getID();
         await new LinksDB({
-            shortURL: shortenedLink,
+            shortURL: rlink,
             longURL: inputedLink
         }).save();
     }
     if (req.isAuthenticated()) {
-        req.user.links.push(shortenedLink);
+        req.user.links.push(rlink);
         req.user.links = [...new Set(req.user.links)].reverse();
         req.user.save();
     }
+    return rlink;
 }
 
 // Get data table of user
@@ -106,19 +98,21 @@ route.post("/register", async (req, res) => {
 
 // Home Page >>>>>>>
 route.get("/", async (req, res) => {
+    var shortenedLink = req.cookies.returnLink || null;
     const pastUrls = await getUserHistory(req);
     res.render('home', { link: shortenedLink, pastUrls: pastUrls ,req:req });
 });
 
 route.post("/", async (req, res) => {
-    await addLink(req);
+    const linkcookie = await addLink(req);
+    res.cookie('returnLink', linkcookie);
     res.redirect("/");
 })
 
 
 // Forclearing the Field >>>>>>>
 route.get('/another', (req, res) => {
-    shortenedLink = null;
+    res.clearCookie('returnLink')
     res.redirect("/");
 })
 
