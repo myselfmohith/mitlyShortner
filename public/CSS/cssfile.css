@@ -1,0 +1,196 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Monoton&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Acme', sans-serif;
+    color: white;
+}
+
+body{
+    width: 100vw;
+    min-height: 100vh;
+    background-color: #ee9617;
+    background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
+}
+
+.navcover{
+    background-color: #fe585850;
+    box-shadow: 0 0 5px 2px #00000025;
+    width: 100vw;
+    overflow: hidden;
+}
+
+h2,th{
+    font-weight: 200;
+}
+
+nav{
+    width: 80vw;
+    margin: auto;
+    padding: 15px 0;
+    font-size: 32px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav p{
+    font-size: 16px;
+    margin: auto 10px;
+    align-self:auto;
+}
+
+nav a{
+    font-family: 'Balsamiq Sans', cursive;
+    text-decoration: none;
+    color: inherit;
+}
+
+.container{
+    max-width: 80vw;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+.twopartcontainer{
+    margin: 25px auto;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-height: 50vh;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+.textpart{
+    font-size: 55px;
+    margin: 10px auto;
+    font-weight: 600;
+}
+
+.textpart span{font-family: 'Monoton', cursive;font-weight: 500;}
+
+.actionpart{
+    margin: 10px auto;
+    width: 340px;
+    height: 218px;
+    border: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 25px;
+    padding: 10px;
+    transition: 0.5s;
+}
+
+.actionpart:hover{
+    background-color: transparent;
+    box-shadow: none;
+    transform: translate(0,-2px);
+    box-shadow: 1px 1px 15px 2px #00000025;
+}
+
+.actionpart *{
+    margin: 10px auto;
+}
+
+.actionpart form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+}
+
+.actionpart form label{
+    width: 100%;
+}
+
+.actionpart form input{
+    min-width: 254px;
+    min-height: 26px;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    color: black;
+}
+
+.actionpart form button{
+    min-width: 212px;
+    min-height: 29px;
+    font-size: 24px;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    padding: 5px;
+    color: black;
+}
+
+.historylinks{
+    min-width: 40vw;
+    max-width: 80vw !important;
+    margin: 10px auto;
+    text-align: center;
+    line-height: 2;
+    border-radius: 25px;
+    overflow: hidden;
+    border: solid 0.5px #22222225;
+}
+
+.historylinks h2{
+    width: 90%;
+    overflow: hidden;
+    margin: 0 auto;
+    text-overflow: ellipsis;
+}
+
+.historylinks table{
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+.historylinks table td,.historylinks table td,th{
+    min-width: 5vw;
+    max-width: 20vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    white-space: nowrap;
+    padding: 5px;
+    padding-left: 30px;
+}
+
+.historylinks table .shlink{
+    min-width: 5vw;
+}
+
+
+.historylinks table tr{
+    border-top: solid 0.5px #22222225;
+}
+
+.historylinks table tr:hover{
+    background-color: #ee961750;
+    transform: translate(0,2px);
+}
+
+@media (max-width: 1280px){
+    .textpart{
+        font-size: 35px;
+    }
+
+    .historylinks{
+        width: 90vw !important;
+    }
+    .historylinks table td,.historylinks table td,th{
+        width: 30vw;
+    }
+}

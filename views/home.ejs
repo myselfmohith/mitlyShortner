@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="twopartcontainer">
+    <div class="textpart">
+      <span>CTRL + V<br />ENTER</span>
+    </div>
+
+    <!-- Link Part ================================================== -->
+    <div class="actionpart">
+      <form action="/" method="post">
+        <% if(link===null) {%>
+
+          <label for="inputedlink">Paste your Link</label>
+          <input type="text" name="link" id="inputedlink" />
+          <button type="submit">SHORTEN</button>
+        <% }else{%>
+
+            <label for="inputedlink">Shortened Link</label>
+            <input type="text" name="link" id="shortLinkgiven" value="javscript:window.location.href<%=link%>" />
+            <button id="textCopy">COPY</button>
+            <a href="/another">Shorten another Link</a>
+        <%}%>
+
+      </form>
+    </div>
+    <!-- ------------------------------------------------------------ -->
+
+  </div>
+
+  <!-- Table ======================================================== -->
+  <div class="historylinks">
+    <% if(!req.isAuthenticated()){%>
+      <h1>Login to Store Your Shortened Links</h1>
+      <a href="/login">Login here</a>
+      <%}else if(pastUrls.length === 0) {%>
+
+        <h1>Empty <i class="far fa-clipboard"></i></h1>
+      <% } else{ %>
+        <h2><%=req.user.email%></h2>
+        <table>
+          <% pastUrls.forEach(ele=> { %>
+            <tr>
+              <td>
+                <%=ele.longURL%>
+              </td>
+              <td class="shlink">
+                <a href="/<%=ele.shortURL%>" target="_blank"><%=ele.shortURL%></a>
+              </td>
+            </tr>
+            <% }); %>
+        </table>
+        <%}%>
+  </div>
+  <!-- ------------------------------------------------------------ -->
+
+</div>
+
+
+<script>
+  if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)){
+    document.querySelector(".textpart span").innerHTML = "HOLD &nbsp > &nbsp PASTE<br>SHORTEN";
+  }
+
+  const linker = document.querySelector(".userguide");
+  if("<%- req.isAuthenticated() -%>" === "true"){
+    linker.innerHTML = "LOGOUT";
+    linker.setAttribute('href','/logout');
+  }else{
+    linker.innerHTML = "SIGN UP";
+    linker.setAttribute('href','/register');
+  }
+
+  const bt = document.querySelector("#textCopy");
+  try {
+    document.getElementById("shortLinkgiven").value =
+      window.location.href + "<%- link %>";
+    bt.addEventListener("click", (event) => {
+      var copyText = document.getElementById("shortLinkgiven");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      console.log("COPIED TEXT");
+      event.preventDefault();
+    });
+  } catch (e) {
+    null;
+  }
+</script>
